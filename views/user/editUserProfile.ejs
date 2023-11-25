@@ -1,0 +1,50 @@
+<%- include('../layouts/userHeader.ejs') %>
+<div class="card-body" style="display: flex; justify-content: center;">
+ 
+  <aside class="col-lg-2">
+      <figure class="text-lg-center">
+          <% 
+              if (userData.image) {
+                  %><img class="img-lg mb-3 img-avatar" id="previewImage" src="/userassets/imgages/productIMG/<%= userData.image %>" alt="User Photo"><%
+              } else {
+                  %><img class="img-lg mb-3 img-avatar" id="previewImage" src="" alt="User Photo"><%
+              }
+          %>
+          <figcaption>
+              <label for="fileUpload" class="btn btn-light rounded font-md">
+                  <i class="icons material-icons md-backup font-md"></i> Upload
+              </label>
+              <input type="file" name="image" id="fileUpload" style="display: none;">
+          </figcaption>
+      </figure>
+  </aside>
+
+  <form id="editProfileForm" class="mx-5" method="post" action="/updateUser">
+    <input type="hidden" name="user_id"  value="<%=userData._id%>">
+      <table style="width: 31.25rem">
+          <tr>
+              <td><strong>Name <span class="required"></span></strong></td>
+              <td>
+                  <input type="text" name="name" value="<%= userData.name %>" required>
+              </td>
+          </tr>
+
+          <tr>
+              <td><strong>Email Address <span class="required"></span></strong></td>
+              <td>
+                  <input type="email" name="email" value="<%= userData.email %>" required>
+              </td>
+          </tr>
+          <tr>
+              <td><strong>Mobile No. <span class="required"></span></strong></td>
+              <td>
+                  <input type="text" name="mobile" value="<%= userData.mobile %>" required>
+              </td>
+          </tr>
+      </table>
+
+      <div class="col-lg-4">
+          <button type="submit" class="btn btn-secondary" >Save Changes</button>
+      </div>
+  </form>
+</div>

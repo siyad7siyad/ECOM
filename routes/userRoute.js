@@ -28,6 +28,8 @@ userRoute.post("/addAddress",addressController.addAddress)
 userRoute.get("/editAddress",addressController.editAddress)
 userRoute.post("/updateAddress",addressController.updateAddress)
 userRoute.get("/deleteAddress/:id",addressController.deleteAddress)
+userRoute.get("/editUser",userController.loadEditUser)
+userRoute.post("/updateUser",userController.updateUser)
 
 
 

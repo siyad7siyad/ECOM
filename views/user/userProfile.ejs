@@ -187,7 +187,7 @@
 
                                                             <input type="hidden" name="address_id" value="<%= x._id %>">
 
-                                                            <a href="/deleteAddress/<%= x._id %>"><button type="button"
+                                                            <a class="mx-5" href="/deleteAddress/<%= x._id %>"><button type="button"
                                                                     class="btn btn-danger">DELETE</button></a>
 
                                                         </div>
@@ -209,9 +209,27 @@
                                             <div class="card-header">
                                                 <h5>Account Details</h5>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body" style="display: flex;">
+                                                    <aside class="col-lg-2">
+                                                    <figure class="text-lg-center">
+                                                        <%# 
+                                                            if (userData.image) {
+                                                                %><img class="img-lg mb-3 img-avatar" id="previewImage" src="/userassets/imgs/user/<%#=userData.image %>" alt="User Photo"><%#
+                                                            }else{
+                                                                %><img class="img-lg mb-3 img-avatar" id="previewImage" src="assets/imgs/people/avatar1.jpg" alt="User Photo"><%#
+        
+                                                            }
+                                                            %>
+                                                        <figcaption>
+                                                            <label for="fileUpload"  class="btn btn-light rounded font-md">
+                                                            <i class="icons material-icons md-backup font-md"></i> Upload
+                                                            </label>
+                                                            <input type="file" name="image" id="fileUpload" style="display: none;"  >
+                                                        </figcaption>
+                                                        </figure>
+                                                </aside>
 
-                                                <table>
+                                                <table class="mx-5">
                                                     <tr>
                                                         <td><strong> Name <span class="required"></span></strong>
                                                         </td>
@@ -234,8 +252,16 @@
                                                             <%= user.mobile %>
                                                         </td>
                                                     </tr>
+                                                   
 
                                                 </table>
+                                                <div class="col-lg-4">
+                                                    
+                                                    <a href="/editUser"><button  type="button" class="btn btn-secondary">EDIT</button></a>
+                                                    
+                                                    </div>
+
+                                                
 
                                             </div>
                                         </div>

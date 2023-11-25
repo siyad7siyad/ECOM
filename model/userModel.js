@@ -25,6 +25,10 @@ const user = mongoose.Schema({
   isBlocked:{
     type:Number,
     default:1
+  },
+  image:{
+    type:String,
+    required:true
   }
 
 })

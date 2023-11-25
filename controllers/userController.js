@@ -6,6 +6,7 @@ const Category = require('../model/categoryModel');
 const Address = require("../model/addressModel")
 const { AwsPage } = require("twilio/lib/rest/accounts/v1/credential/aws");
 
+
 const securePassword = async (password) => {
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -353,10 +354,12 @@ const updatePassword = async(req,res)=>{
 
 const verifyForget = async(req,res)=>{
   try {
+    
 
     const otp = req.body.otp
 
     if(otp==req.session.otp){
+    
       res.redirect("/resetPassword")
     }
 
@@ -365,6 +368,62 @@ const verifyForget = async(req,res)=>{
     console.log(error.message);
   }
 }
+
+// load edit user
+
+const loadEditUser = async(req,res)=>{
+  try {
+
+    const userId = req.session.user_id
+    const userData = await User.findById(userId)
+
+    if(userData){
+      res.render("user/editUserProfile",{userData})
+    }else{
+      res.render("user/login")
+    }
+
+   
+    
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+// update edit user
+const updateUser = async (req, res) => {
+  try {
+    let id = req.body.user_id;
+   
+    const userId = req.session.user_id;
+
+    const userData = await User.findById(id);
+
+    const { name, mobile } = req.body;
+
+    // Check if a file is uploaded before updating the image
+    const updateEdit = await User.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          name,
+          mobile,
+          ...(req.file && { image: req.file.filename }), // only update image if file is uploaded
+        },
+      },
+      { new: true } // return the updated document
+    );
+
+    
+    
+
+    res.redirect("/user-profile");
+  } catch (error) {
+    console.log(error.message);
+   
+  }
+};
+
 
 
 
@@ -387,7 +446,8 @@ module.exports = {
   enterOtp,
   loadReset,
   updatePassword,
-  verifyForget
+  verifyForget,
+  loadEditUser,
+  updateUser
  
-
 };
