@@ -29,7 +29,22 @@ const storeProductImg = multer.diskStorage({
 
 })
 
+// user profile 
+
+const storeUserProfile = multer.diskStorage({
+  destination:(req,file,cb)=>{
+
+    cb(null,'public/userassets/images')
+
+  },
+  filename:(req,file,cb)=>{
+    const fileName = Date.now()+path.extname(file.originalname)
+    cb(null,fileName)
+  }
+})
+
 module.exports = {
   uploadCategory:multer({storage:storage}),
-  uploadProduct:multer({storage:storeProductImg})
+  uploadProduct:multer({storage:storeProductImg}),
+  uploadProfile:multer({storage:storeUserProfile})
 }

@@ -1,23 +1,7 @@
 <%- include('../layouts/userHeader.ejs') %>
 <div class="card-body" style="display: flex; justify-content: center;">
  
-  <aside class="col-lg-2">
-      <figure class="text-lg-center">
-          <% 
-              if (userData.image) {
-                  %><img class="img-lg mb-3 img-avatar" id="previewImage" src="/userassets/imgages/productIMG/<%= userData.image %>" alt="User Photo"><%
-              } else {
-                  %><img class="img-lg mb-3 img-avatar" id="previewImage" src="" alt="User Photo"><%
-              }
-          %>
-          <figcaption>
-              <label for="fileUpload" class="btn btn-light rounded font-md">
-                  <i class="icons material-icons md-backup font-md"></i> Upload
-              </label>
-              <input type="file" name="image" id="fileUpload" style="display: none;">
-          </figcaption>
-      </figure>
-  </aside>
+  
 
   <form id="editProfileForm" class="mx-5" method="post" action="/updateUser">
     <input type="hidden" name="user_id"  value="<%=userData._id%>">

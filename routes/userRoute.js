@@ -3,6 +3,7 @@ const userRoute = express()
 const addressController = require("../controllers/addressController")
 const userController = require("../controllers/userController")
 const userAuth = require('../middlewares/userAuth')
+const multer = require("../middlewares/multer")
 // registration
 
 userRoute.get('/register',userAuth.isLogout,userController.loadRegister)
@@ -16,7 +17,7 @@ userRoute.get('/login', userController.loadLogin);
 userRoute.post('/login', userController.verifyLogin);
 
 // home page
-userRoute.get('/', userAuth.isLogin, userController.loadHome);
+userRoute.get('/', userController.loadHome);
 
 userRoute.get("/items",userAuth.isLogin,userController.loadItems)
 userRoute.get("/single-items",userAuth.isLogin,userController.singleItems)
@@ -30,6 +31,9 @@ userRoute.post("/updateAddress",addressController.updateAddress)
 userRoute.get("/deleteAddress/:id",addressController.deleteAddress)
 userRoute.get("/editUser",userController.loadEditUser)
 userRoute.post("/updateUser",userController.updateUser)
+userRoute.get("/changePassword",userController.changePassword)
+userRoute.post("/editPassword",userController.editPassword)
+userRoute.post("/updateProfile",multer.uploadProfile.single('image'),userController.updateProfile)
 
 
 

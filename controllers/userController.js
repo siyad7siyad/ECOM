@@ -5,12 +5,14 @@ const message = require("../config/nodeMailer");
 const Category = require('../model/categoryModel');
 const Address = require("../model/addressModel")
 const { AwsPage } = require("twilio/lib/rest/accounts/v1/credential/aws");
+const multer = require("../middlewares/multer")
 
 
 const securePassword = async (password) => {
   try {
     const passwordHash = await bcrypt.hash(password, 10);
-    return passwordHash;
+    return passwordHash;rs
+
   } catch (error) {
     console.log(error.message);
   }
@@ -136,6 +138,7 @@ console.log(firstDigit)
 // GET LOGIN
 const loadLogin = async (req, res) => {
   try {
+    
     res.render("user/login");
   } catch (error) {
     console.log(error.message);
@@ -424,6 +427,108 @@ const updateUser = async (req, res) => {
   }
 };
 
+// change user password
+
+const changePassword = async(req,res)=>{
+  try {
+
+    res.render("user/passwordChange")
+    
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+// edit password
+const editPassword = async (req, res) => {
+  try {
+    console.log(req.session,"akakaka");
+    const user_id = req.session.user_id;
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+
+    console.log('User ID:', user_id);
+
+    const user = await User.findById(user_id);
+
+    if (!user) {
+      console.error('User not found');
+      return res.status(404).json({ error: 'User is not found' });
+    }
+
+    console.log('User found:', user);
+
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      console.error('Invalid old password');
+      return res.status(401).json({ error: 'Invalid old password' });
+    }
+
+    const secureNewPassword = await securePassword(newPassword);
+
+    const updatePassword = await User.findByIdAndUpdate(
+      { _id: user_id },
+      {
+        $set: {
+          password: secureNewPassword,
+        },
+      }
+    );
+
+    if (updatePassword) {
+      console.log('Password updated successfully');
+      res.redirect('/user-profile');
+    } else {
+      console.error('Password update failed');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// upload profile
+
+const updateProfile = async (req, res) => {
+  try {
+   
+    const id = req.query.id
+
+    
+
+    if(!req.file){
+
+
+
+
+      const userData = await User.findByIdAndUpdate({_id:id},{
+        $set:{
+          name:req.body.name,
+          email:req.body.email,
+          mobile:req.body.mobile
+        }
+      })
+
+    }else{
+      const userData = await User.findByIdAndUpdate({_id:id},{
+        $set:{
+          image:req.file.filename
+        }
+      })
+    }
+
+    res.redirect("/user-profile")
+
+
+
+
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 
@@ -448,6 +553,9 @@ module.exports = {
   updatePassword,
   verifyForget,
   loadEditUser,
-  updateUser
+  updateUser,
+  changePassword,
+  editPassword,
+  updateProfile
  
 };

@@ -187,7 +187,8 @@
 
                                                             <input type="hidden" name="address_id" value="<%= x._id %>">
 
-                                                            <a class="mx-5" href="/deleteAddress/<%= x._id %>"><button type="button"
+                                                            <a class="mx-5" href="/deleteAddress/<%= x._id %>"><button
+                                                                    type="button"
                                                                     class="btn btn-danger">DELETE</button></a>
 
                                                         </div>
@@ -210,24 +211,33 @@
                                                 <h5>Account Details</h5>
                                             </div>
                                             <div class="card-body" style="display: flex;">
-                                                    <aside class="col-lg-2">
+                                                
+                                                <aside class="col-lg-2">
                                                     <figure class="text-lg-center">
-                                                        <%# 
-                                                            if (userData.image) {
-                                                                %><img class="img-lg mb-3 img-avatar" id="previewImage" src="/userassets/imgs/user/<%#=userData.image %>" alt="User Photo"><%#
-                                                            }else{
-                                                                %><img class="img-lg mb-3 img-avatar" id="previewImage" src="assets/imgs/people/avatar1.jpg" alt="User Photo"><%#
-        
-                                                            }
-                                                            %>
+                                                        <% if (user.image) { %>
+                                                            <img class="img-lg mb-3 img-avatar" id="previewImage" src="/userassets/images/<%= user.image %>" alt="User Photo">
+                                                        <% } else { %>
+                                                            <img class="img-lg mb-3 img-avatar" id="previewImage" src="/userassets/images/Artboard 1.png" alt="User Photo">
+                                                        <% } %>
                                                         <figcaption>
-                                                            <label for="fileUpload"  class="btn btn-light rounded font-md">
-                                                            <i class="icons material-icons md-backup font-md"></i> Upload
-                                                            </label>
-                                                            <input type="file" name="image" id="fileUpload" style="display: none;"  >
+                                             
+
+                                                                <form action="/updateProfile?id=<%= user._id%>" method="post" enctype="multipart/form-data">
+   
+                                                                <input type="file" name="image" id="fileUpload" style="display: none;">
+                                                                <label type="submit" for="fileUpload" class="btn btn-light rounded font-md">
+                                                                    <i class="icons material-icons md-backup font-md"></i>
+                                                                    Upload
+                                                                </label>
+
+                                                                <button type="submit" class="btn btn-success">Save</button>
+                                                            </form>
+                                                           
+                                                            <!-- <input type="hidden" name="image" value="<%=user.image %>"> -->
                                                         </figcaption>
-                                                        </figure>
+                                                    </figure>
                                                 </aside>
+                                                
 
                                                 <table class="mx-5">
                                                     <tr>
@@ -252,16 +262,25 @@
                                                             <%= user.mobile %>
                                                         </td>
                                                     </tr>
-                                                   
+
 
                                                 </table>
+                                              
                                                 <div class="col-lg-4">
-                                                    
-                                                    <a href="/editUser"><button  type="button" class="btn btn-secondary">EDIT</button></a>
-                                                    
-                                                    </div>
 
+                                                    <a href="/editUser"><button type="button"
+                                                            class="btn btn-secondary">EDIT</button></a>
+
+
+                                                            <a href="/changePassword"><button type="button"
+                                                                class="btn btn-secondary mt-3">Change Password</button></a>
+
+                                                </div>
                                                 
+                                                
+
+
+
 
                                             </div>
                                         </div>
@@ -273,4 +292,21 @@
                 </div>
         </section>
     </main>
+<script>
+
+document.getElementById("fileUpload").addEventListener('change',function(event){
+    const file = event.target.files[0]
+    if(file){
+
+        const reader = new FileReader()
+        reader.onload = function(e){
+            document.getElementById('previewImage').src = e.target.result
+        }
+        reader.readAsDataURL(file)
+
+    }
+})
+
+</script>
+
     <%- include('../layouts/userFooter.ejs') %>

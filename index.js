@@ -1,9 +1,8 @@
 const path = require("path")
 const session = require("express-session")
 const dbConnection = require('./config/dbConnect')
+const dotenv = require("dotenv").config()
 
-
-require("dotenv").config()
 
 const express = require("express")
 const userRoute = require("./routes/userRoute")
@@ -21,7 +20,7 @@ app.use(express.urlencoded({extended:true}))
 // session creation
 
 app.use(session({
-  secret:process.env.SESSION_SECRET,
+  secret:process.env.SESSION_SECRET || "mysessionsecret", 
   resave:false,
   saveUninitialized:true
 }))
