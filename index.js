@@ -8,6 +8,7 @@ const express = require("express")
 const userRoute = require("./routes/userRoute")
 const adminRoute = require('./routes/adminRoute')
 
+
 // const categoryRoute = require('./routes/categoryRoute')
 
 const app = express()
@@ -47,6 +48,8 @@ app.use(express.static(path.join(__dirname,'/public/itemsStyle')))
 app.use('/',userRoute)
 // for admin route
 app.use('/admin',adminRoute)
+
+
 
 
 

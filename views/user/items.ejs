@@ -311,16 +311,46 @@
                                           <span>
                                               <span>90%</span>
                                           </span>
+                                          
                                       </div>
                                       <div class="product-price">
                                           <span><%= product.discount_Price %> </span>
                                           <span class="old-price"><%= product.price %></span>
+                                          
                                       </div>
-                                      <div class="product-action-1 show">
-                                          <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
-                                      </div>
+                                    
                                   </div>
+                                  <!-- <form id="myForm" action="/cart" method="post">                   
+                                    <div class="product-action-1 show">
+                                        <input type="hidden" value="<%= product._id %>" name="productData_id"> 
+                                        <input type="hidden" value="1" name="qty">
+                                        <button type="submit" aria-label="Add To Cart"  class="action-btn hover-up" >
+                                            <i class="fi-rs-shopping-bag-add"></i>
+                                        </button>
+                                    </div>
+                                </form> -->
+                                <form id="myForm" action="/cart" method="post">                   
+                                  <div class="product-action-1 show">
+                                      <input type="hidden" value="<%= product._id %>" name="productData_id"> 
+                                      <input type="hidden" value="1" name="qty">
+                                      <button type="submit" aria-label="Add To Cart" class="action-btn hover-up" style="background-color: #4CAF50; /* Green */
+                                          border: none;
+                                          color: white;
+                                          padding: 10px 20px;
+                                          text-align: center;
+                                          text-decoration: none;
+                                          display: inline-block;
+                                          font-size: 16px;
+                                          margin: 4px 2px;
+                                          cursor: pointer;
+                                          border-radius: 4px;">
+                                          <i class="fi-rs-shopping-bag-add"></i> Add To Cart
+                                      </button>
+                                  </div>
+                              </form>
+                              
                               </div>
+                              
                           </div>
                           <% } %>
 

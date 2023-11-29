@@ -4,6 +4,7 @@ const addressController = require("../controllers/addressController")
 const userController = require("../controllers/userController")
 const userAuth = require('../middlewares/userAuth')
 const multer = require("../middlewares/multer")
+const cartController = require("../controllers/cartController")
 // registration
 
 userRoute.get('/register',userAuth.isLogout,userController.loadRegister)
@@ -34,6 +35,13 @@ userRoute.post("/updateUser",userController.updateUser)
 userRoute.get("/changePassword",userController.changePassword)
 userRoute.post("/editPassword",userController.editPassword)
 userRoute.post("/updateProfile",multer.uploadProfile.single('image'),userController.updateProfile)
+
+
+// cart
+userRoute.get("/cart",cartController.loadCartPage)
+userRoute.post("/cart",cartController.addToCart)
+userRoute.put("/updateCart",cartController.updateCartCount)
+userRoute.delete("/removeCartItem",cartController.removeFromCart)
 
 
 
